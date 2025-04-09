@@ -1,13 +1,14 @@
-# Virtual environment folders
-venv/
+# Ignore virtual environment directories
 ragenv/
+venv/
 
-# Python cache files
+# Ignore data folder (if you don't want to track datasets)
+data/
+
+# Ignore Python cache files
 __pycache__/
 *.py[cod]
-
-# Data folder (to exclude large dataset files)
-data/
+*.egg-info/
 
 # Log files, etc.
 *.log
