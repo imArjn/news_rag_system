@@ -1,0 +1,13 @@
+# Virtual environment folders
+venv/
+ragenv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Data folder (to exclude large dataset files)
+data/
+
+# Log files, etc.
+*.log
