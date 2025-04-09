@@ -1,4 +1,5 @@
 # src/router.py
+import re
 
 def route_request(user_query: str, data_provided: bool = False) -> str:
     """
@@ -19,7 +20,8 @@ def route_request(user_query: str, data_provided: bool = False) -> str:
     
     # Option 2: If the user_query mentions "LinkedIn" explicitly, you can decide to use Agent3
     # (for example, if the user says "generate a LinkedIn post about ...")
-    if "linkedin" or "Linkedin" or "Linked In" in user_query.lower():
+    pattern = r'\blink(?:ed)?\s*in\b'
+    if re.search(pattern, user_query, re.IGNORECASE):
         return "Agent3"
     
     # Option 3: Otherwise, assume it's a request for news, so route to Agent2.
