@@ -10,7 +10,7 @@ def retrieve_and_summarize(query: str, data, index, top_k: int = 3) -> str:
     and generate a concatenated summary of their short descriptions.
     
     Parameters:
-        query (str): The user query.
+        query (str): The user query.a
         data (pandas.DataFrame): The preprocessed news dataset.
         index (faiss.Index): The FAISS index built over article embeddings.
         top_k (int): Number of articles to retrieve.
