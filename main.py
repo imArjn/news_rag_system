@@ -6,7 +6,7 @@ from src.embedding import get_embedding
 from src.summarization import generate_summary_local
 from src.router import route_request
 from src.linkedin_post import generate_linkedin_post
-from src.agent2 import retrieve_and_summarize  # Import Agent2's helper function
+from src.agent2 import retrieve_and_summarize  # Make sure you have this defined in agent2.py
 import numpy as np
 
 def interactive_query():
@@ -17,11 +17,11 @@ def interactive_query():
     Returns:
         user_query (str): The main query text.
         data_provided (bool): True if extra data is provided.
-        extra_data (str): The additional content, if provided, else an empty string.
+        extra_data (str): The additional content if provided, else an empty string.
     """
     user_query = input("Enter your query (what would you like to do?): ").strip()
-    
     extra_response = input("Is additional data provided for LinkedIn post generation? (Y/N): ").strip().lower()
+    
     if extra_response == "y":
         data_provided = True
         extra_data = input("Please enter the additional data: ").strip()
@@ -33,12 +33,11 @@ def interactive_query():
 
 def main():
     # Data loading and preprocessing.
-    file_path = "data/sample.json"  # Use sample.json for development, change to Dataset.json for full data.
+    file_path = "data/sample.json"  # Use sample.json for development; later change to Dataset.json if needed.
     data = load_data(file_path)
     if data is None:
         print("Failed to load data!")
         return
-
     data = clean_data(data)
     data = add_embeddings(data, text_column='short_description')
     
@@ -47,15 +46,15 @@ def main():
     embeddings_np = np.vstack(embeddings_list)
     index = build_index(embeddings_np)
     
-    # Get interactive query input.
+    # Interactive query input.
     user_query, data_provided, extra_data = interactive_query()
     
-    # Use the router to determine which agent handles the query.
+    # Use the router to determine the agent.
     agent = route_request(user_query, data_provided)
     print("Router directs the query to:", agent)
     
     if agent == "Agent2":
-        # Agent 2: News Retrieval & Summarization.
+        # Normal news retrieval & summarization branch.
         query_embedding = get_embedding(user_query)
         top_k = 3
         indices, distances = search(index, query_embedding, top_k)
@@ -71,20 +70,19 @@ def main():
             print("Summary:", summary)
             
     elif agent == "Agent3":
-        # Agent 3: LinkedIn Post Generation.
+        # Agent 3: LinkedIn post generation.
         if data_provided:
-            # If extra data was provided, use that directly.
-            input_text = extra_data
+            # Extra data provided: combine the user's query and the additional data,
+            # and generate the LinkedIn post directly without contacting the database.
+            combined_input = f"{user_query}. Additional details: {extra_data}"
+            linkedin_post = generate_linkedin_post(combined_input, mode="dynamic", initial_max_length=200, max_iterations=3)
         else:
-            # No extra data provided.
-            # According to the workflow:
-            # "User generates a LinkedIn post on a specific event: 
-            # Agent 1 routes the request to Agent 2, which finds the relevant news.
-            # The data is then passed to Agent 3 to generate a LinkedIn post."
-            # So, retrieve and summarize relevant news using Agent 2, then pass that summary to Agent 3.
-            input_text = retrieve_and_summarize(user_query, data, index, top_k=3)
+            # No extra data provided:
+            # Retrieve and summarize relevant news first (Agent 2 step),
+            # then pass that summary to Agent 3 for LinkedIn post generation.
+            combined_summary = retrieve_and_summarize(user_query, data, index, top_k=3)
+            linkedin_post = generate_linkedin_post(combined_summary, mode="default", initial_max_length=200, max_iterations=3)
         
-        linkedin_post = generate_linkedin_post(input_text)
         print("\n--- Generated LinkedIn Post ---")
         print(linkedin_post)
 
