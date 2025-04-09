@@ -78,11 +78,10 @@ def main():
             linkedin_post = generate_linkedin_post(combined_input, mode="dynamic", initial_max_length=200, max_iterations=3)
         else:
             # No extra data provided:
-            # Retrieve and summarize relevant news first (Agent 2 step),
-            # then pass that summary to Agent 3 for LinkedIn post generation.
-            combined_summary = retrieve_and_summarize(user_query, data, index, top_k=3)
+            # Retrieve and summarize relevant news using hybrid search.
+            combined_summary = retrieve_and_summarize(user_query, data, index, top_k=2, use_hybrid=True, alpha=0.5)
             linkedin_post = generate_linkedin_post(combined_summary, mode="default", initial_max_length=200, max_iterations=3)
-        
+    
         print("\n--- Generated LinkedIn Post ---")
         print(linkedin_post)
 
