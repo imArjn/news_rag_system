@@ -34,7 +34,7 @@ def generate_linkedin_post(text: str, mode: str = "default", initial_max_length:
     post = ""
     
     if mode == "dynamic":
-        # In dynamic mode, use a prompt that is tailored to the topics provided.
+        # dynamic mode
         prompt = (
             f"Write a detailed, professional, and engaging LinkedIn post about the following topics: {text}. "
             "The post should be at least three sentences long, offering insights and a clear call-to-action."
@@ -63,7 +63,6 @@ def generate_linkedin_post(text: str, mode: str = "default", initial_max_length:
         else:
             post = full_text
         
-        # Optional: Ensure a minimum number of sentences; here, we require at least 3.
         sentences = [s.strip() for s in post.split('.') if s.strip()]
         if len(sentences) >= 3 and is_complete(post):
             break
@@ -74,7 +73,7 @@ def generate_linkedin_post(text: str, mode: str = "default", initial_max_length:
     return post
 
 if __name__ == '__main__':
-    # Test dynamic mode: user provides extra data (e.g., "I want a LinkedIn post on Joe Biden. Additional details: Joe Biden and lady Biden")
+    # Test dynamic mode: user provides extra data
     dynamic_input = "I want a LinkedIn post on Joe Biden. Additional details: Joe Biden and lady Biden."
     linkedin_post_dynamic = generate_linkedin_post(dynamic_input, mode="dynamic", initial_max_length=250, max_iterations=3)
     
@@ -84,7 +83,7 @@ if __name__ == '__main__':
     print("\nGenerated LinkedIn Post:")
     print(linkedin_post_dynamic)
     
-    # Test default mode: using a retrieved summary (simulate a summary from the database)
+    # Test default mode: using a retrieved summary 
     default_input = (
         "Joe Biden recently announced new vaccine initiatives and measures to bolster public health, leading to mixed reactions among experts and the public."
     )

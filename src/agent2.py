@@ -67,11 +67,5 @@ def retrieve_and_summarize(query: str, data, index, top_k: int = 3, use_hybrid: 
     return combined_summary
 
 if __name__ == '__main__':
-    # Standalone testing can be done if you load your data and index.
-    # For example:
-    #   import pandas as pd
-    #   data = pd.read_json("data/sample.json", lines=True)
-    #   # Build embeddings and FAISS index accordingly...
-    #   summary = retrieve_and_summarize("Joe Biden vaccines", data, index, top_k=3, use_hybrid=True, alpha=0.5)
-    #   print(summary)
+    # not suitable for standalone
     pass

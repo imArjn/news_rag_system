@@ -14,12 +14,11 @@ def route_request(user_query: str, data_provided: bool = False) -> str:
       str: Returns "Agent3" if data is provided (LinkedIn post generation);
            Otherwise returns "Agent2" for news retrieval & summarization.
     """
-    # Option 1: If data is provided (e.g., user has given news content), route to Agent3.
+    # Option 1: If data is provided, route to Agent3.
     if data_provided:
         return "Agent3"
     
     # Option 2: If the user_query mentions "LinkedIn" explicitly, you can decide to use Agent3
-    # (for example, if the user says "generate a LinkedIn post about ...")
     pattern = r'\blink(?:ed)?\s*in\b'
     if re.search(pattern, user_query, re.IGNORECASE):
         return "Agent3"

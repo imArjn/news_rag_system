@@ -41,8 +41,7 @@ def search(index, query_embedding, top_k=5):
     return indices, distances
 
 if __name__ == '__main__':
-    # For test purposes, let's build an index with random embeddings.
-    # In practice, you'll use the embeddings from your data (embeddings_np).
+    # test purposes:
     
     # Create dummy embeddings: For example, 1000 samples of 384-dimensional vectors
     dummy_embeddings = np.random.rand(1000, 384).astype('float32')

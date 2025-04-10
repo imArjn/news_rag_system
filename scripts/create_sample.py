@@ -5,7 +5,7 @@ def create_sample(input_file_path, output_file_path, sample_size=1000):
     Reads the full JSON dataset and writes the first sample_size rows to a new JSON file.
     """
     try:
-        # Load the full dataset (ensure it is line-delimited)
+        # Load the full dataset 
         data = pd.read_json(input_file_path, lines=True)
         print(f"Full dataset loaded. Shape: {data.shape}")
 
@@ -20,7 +20,6 @@ def create_sample(input_file_path, output_file_path, sample_size=1000):
         print("Error creating sample:", e)
 
 if __name__ == '__main__':
-    # Make sure these paths are correct relative to your project
     full_dataset_path = "data/Dataset.json"
     sample_output_path = "data/sample.json"
     create_sample(full_dataset_path, sample_output_path, sample_size=1000)

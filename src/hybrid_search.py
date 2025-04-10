@@ -3,7 +3,7 @@
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from src.search import search  # Your FAISS-based semantic search
+from src.search import search  # FAISS-based semantic search import
 
 class HybridSearch:
     def __init__(self, data, tfidf_field="short_description"):

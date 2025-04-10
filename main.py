@@ -33,7 +33,7 @@ def interactive_query():
 
 def main():
     # Data loading and preprocessing.
-    file_path = "data/sample.json"  # Use sample.json for development; later change to Dataset.json if needed.
+    file_path = "data/sample.json"  # Please change to Dataset.json if whole dataset needed.
     data = load_data(file_path)
     if data is None:
         print("Failed to load data!")

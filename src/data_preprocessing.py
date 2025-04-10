@@ -43,7 +43,7 @@ def add_embeddings(data, text_column='short_description'):
     return data
 
 if __name__ == '__main__':
-    # Path to your full dataset file
+    # Path to the full dataset file
     file_path = "data/sample.json"
     data = load_data(file_path)
     if data is not None:
@@ -59,7 +59,7 @@ if __name__ == '__main__':
         index = build_index(embeddings_np)
         
         # Create a query embedding
-        query_text = "Latest updates on political news"  # Example query
+        query_text = "Latest updates on political news"  # Example query for testing
         query_embedding = get_embedding(query_text)
         
         # Search for top 5 nearest neighbors
